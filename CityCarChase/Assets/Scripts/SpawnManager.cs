@@ -4,47 +4,75 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+    private GameObject player;
+    private float playerX;
+    private float playerZ;
     public GameObject enemyPrefab;
-    public float spawnRadius = 45.0f;
+    public int enemyCount;
+    public int enemys = 1;
+    private float spawnRadius = 45.0f;
+    private float spawnPosX;
+    private float spawnPosZ;
+    public GameObject buildingPrefab;
+    public int gridSize = 5;
     
     // Start is called before the first frame update
     void Start()
     {
-        
-        Instantiate(enemyPrefab, GenerateSpawnPostion(), enemyPrefab.transform.rotation);
+        player = GameObject.Find("Player");
+        for (int x = -gridSize; x < gridSize; x++)
+        {
+            for (int z = -gridSize; z < gridSize; z++)
+            {
+                int spawn = Random.Range(1, 4);
+                if (spawn == 1)
+                {
+                    if (x != 0)
+                    {
+                        if (z != 0)
+                        {
+                            Vector3 spawnPos = new Vector3(x * 20, 15, z * 20);
+                            Instantiate(buildingPrefab, spawnPos, enemyPrefab.transform.rotation);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        playerX = player.transform.position.x;
+        playerZ = player.transform.position.z;
+        enemyCount = FindObjectsOfType<Enemy>().Length;
+        if (enemyCount < enemys)
+        {
+            Instantiate(enemyPrefab, GenerateSpawnPostion(), enemyPrefab.transform.rotation);
+        }
     }
-
+    
     private Vector3 GenerateSpawnPostion()
     {
         int direction = Random.Range(1, 4);
-        if (direction == 1 or direction == 3)
+        spawnPosX = Random.Range(playerX - spawnRadius, playerX + spawnRadius);
+        spawnPosZ = Random.Range(playerZ - spawnRadius, playerZ + spawnRadius);
+        if (direction == 1)
         {
-            spawnPosX = Random.Range(-spawnRadius, spawnRadius);
-            if (direction == 1):
-            {
-                spawnPosY = spawnRadius;
-            }else:
-            {
-                spawnPosY = -spawnRadius;
-            }
-        }else:
+            spawnPosX = playerX + spawnRadius;
+        }else if (direction == 2)
         {
-            spawnPosY = Random.Range(-spawnRadius, spawnRadius);
-            if (direction == 2):
-            {
-                spawnPosX = spawnRadius;
-            }else
-            {
-                spawnPosX = -spawnRadius;
-            }
+            spawnPosZ = playerZ + spawnRadius;
         }
-        Vector3 randomPos = new Vector3(spawnPosX, 0, spawnPosY);
+        else if (direction == 3)
+        {
+            spawnPosX = playerX - spawnRadius;
+        }
+        else if (direction == 4)
+        {
+            spawnPosZ = playerZ - spawnRadius;
+        }
+        Vector3 randomPos = new Vector3(spawnPosX, 0, spawnPosZ);
         return randomPos;
     }
 }
