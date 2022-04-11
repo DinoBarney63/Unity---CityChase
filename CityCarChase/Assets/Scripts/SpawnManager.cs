@@ -10,7 +10,7 @@ public class SpawnManager : MonoBehaviour
     public GameObject enemyPrefab;
     public int enemyCount;
     public int enemys = 1;
-    private float spawnRadius = 45.0f;
+    public float spawnRadius = 85.0f;
     private float spawnPosX;
     private float spawnPosZ;
     public GameObject buildingPrefab;
@@ -27,13 +27,10 @@ public class SpawnManager : MonoBehaviour
                 int spawn = Random.Range(1, 4);
                 if (spawn == 1)
                 {
-                    if (x != 0)
+                    if (x != 0 && z != 0)
                     {
-                        if (z != 0)
-                        {
-                            Vector3 spawnPos = new Vector3(x * 20, 15, z * 20);
-                            Instantiate(buildingPrefab, spawnPos, enemyPrefab.transform.rotation);
-                        }
+                        Vector3 spawnPos = new Vector3(x * 20, 15, z * 20);
+                        Instantiate(buildingPrefab, spawnPos, enemyPrefab.transform.rotation);
                     }
                 }
             }
