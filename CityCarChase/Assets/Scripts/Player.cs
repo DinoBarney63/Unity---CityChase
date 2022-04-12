@@ -34,8 +34,6 @@ public class Player : MonoBehaviour
             gameActive = false;
         else if (playerZRotation > 80 && playerZRotation < 280)
             gameActive = false;
-        else
-            gameActive = true;
 
         if (gameActive)
         {
