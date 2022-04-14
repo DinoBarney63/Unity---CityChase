@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     private GameObject focalPoint;
     public float playerXRotation;
     public float playerZRotation;
+    public GameManager gameManager;
     
     // Start is called before the first frame update
     void Start()
@@ -32,13 +33,28 @@ public class Player : MonoBehaviour
 
         if (playerXRotation > 80 && playerXRotation < 280)
             gameActive = false;
+            
         else if (playerZRotation > 80 && playerZRotation < 280)
             gameActive = false;
-
+           
+            
         if (gameActive)
         {
             playerRb.AddForce(playerRb.transform.forward * speed * forwardInput);
             transform.Rotate(Vector3.up, turnSpeed * horizontalInput * Time.deltaTime);
         }
+        else
+        {
+            gameManager.GameOver();
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Obstacle"))
+            gameManager.UpdateHealthPercentage(0.5f);
+
+        else if (collision.gameObject.CompareTag("Enemy"))
+            gameManager.UpdateHealthPercentage(1);
     }
 }

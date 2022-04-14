@@ -16,12 +16,21 @@ public class GameManager : MonoBehaviour
     private float spawnPosZ;
     public GameObject buildingPrefab;
     public int gridSize = 5;
+    private int score;
+    public float healthPercentage;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI healthPrecentageText;
     public TextMeshProUGUI gameOverText;
     
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player");
+
+        score = 0;
+        UpdateScore(0);
+        healthPercentage = 100;
+        UpdateHealthPercentage(0);
 
         for (int x = -gridSize; x < gridSize; x++)
         {
@@ -74,5 +83,32 @@ public class GameManager : MonoBehaviour
         }
         Vector3 randomPos = new Vector3(spawnPosX, 0, spawnPosZ);
         return randomPos;
+    }
+
+    public void UpdateEnemies(int enemiesToAdd)
+    {
+        enemyCount += enemiesToAdd;
+    }
+
+    public void GameOver()
+    {
+        gameOverText.gameObject.SetActive(true);
+    }
+
+    public void UpdateScore(int scoreToAdd)
+    {
+        score += scoreToAdd;
+        scoreText.text = "Score: " + score;
+    }
+
+    public void UpdateHealthPercentage(float healthToSubtract)
+    {
+        healthPercentage -= healthToSubtract;
+        if (healthPercentage < 1)
+        {
+            healthPercentage = 0;
+            GameOver();
+        }
+        healthPrecentageText.text = "Health: " + Mathf.Round(healthPercentage) + "%";
     }
 }

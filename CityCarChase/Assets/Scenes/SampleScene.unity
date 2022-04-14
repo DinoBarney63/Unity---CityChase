@@ -219,7 +219,7 @@ RectTransform:
   - {fileID: 1761485705}
   - {fileID: 1355614380}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 115143247}
   - component: {fileID: 115143248}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: Game Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,7 +256,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &115143248
 MonoBehaviour:
@@ -276,6 +276,9 @@ MonoBehaviour:
   spawnRadius: 85
   buildingPrefab: {fileID: 509928529544178480, guid: 8573d1fd08b97a14bbef8b7e7508bad5, type: 3}
   gridSize: 10
+  healthPercentage: 0
+  scoreText: {fileID: 666122266}
+  healthPrecentageText: {fileID: 1761485706}
   gameOverText: {fileID: 1355614381}
 --- !u!1 &198014183
 GameObject:
@@ -509,6 +512,7 @@ MonoBehaviour:
   gameActive: 1
   playerXRotation: 0
   playerZRotation: 0
+  gameManager: {fileID: 115143248}
 --- !u!65 &639337978
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -594,8 +598,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 70, y: -40}
-  m_SizeDelta: {x: 111, y: 50}
+  m_AnchoredPosition: {x: 150, y: -40}
+  m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &666122266
 MonoBehaviour:
@@ -617,7 +621,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Score
+  m_text: 'Score: 0
 
 '
   m_isRightToLeft: 0
@@ -1558,8 +1562,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -70, y: -40}
-  m_SizeDelta: {x: 111, y: 50}
+  m_AnchoredPosition: {x: -110, y: -40}
+  m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1761485706
 MonoBehaviour:
@@ -1581,9 +1585,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Health
-
-'
+  m_text: 'Health: 100%'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
