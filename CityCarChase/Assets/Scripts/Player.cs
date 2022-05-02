@@ -13,12 +13,13 @@ public class Player : MonoBehaviour
     private GameObject focalPoint;
     public float playerXRotation;
     public float playerZRotation;
-    public GameManager gameManager;
+    private GameManager gameManager;
     
     // Start is called before the first frame update
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
 

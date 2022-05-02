@@ -270,9 +270,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27f0b220bf2c8274ca20706a0b45b42b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 9004477763504005077, guid: ced6a2a376887be48b8714a29041915f, type: 3}
+  enemyPrefab: {fileID: 2647946250551451040, guid: ced6a2a376887be48b8714a29041915f, type: 3}
   enemyCount: 0
-  enemys: 5
+  enemyTotal: 5
   spawnRadius: 85
   buildingPrefab: {fileID: 509928529544178480, guid: 8573d1fd08b97a14bbef8b7e7508bad5, type: 3}
   gridSize: 10
@@ -512,7 +512,6 @@ MonoBehaviour:
   gameActive: 1
   playerXRotation: 0
   playerZRotation: 0
-  gameManager: {fileID: 115143248}
 --- !u!65 &639337978
 BoxCollider:
   m_ObjectHideFlags: 0
