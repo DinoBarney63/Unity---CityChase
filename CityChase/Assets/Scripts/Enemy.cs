@@ -10,11 +10,15 @@ public class Enemy : MonoBehaviour
     public bool isAlive = true;
     public int enemyHealth = 5;
     private GameManager gameManager;
+    public GameObject aliveParts;
+    public GameObject deadParts;
 
     // Start is called before the first frame update
     void Start()
     {
         enemyRb = GetComponent<Rigidbody>();
+        aliveParts.gameObject.SetActive(true);
+        deadParts.gameObject.SetActive(false);
         player = GameObject.Find("Player");
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
@@ -57,6 +61,10 @@ public class Enemy : MonoBehaviour
         {
             gameManager.UpdateEnemies(1);
             isAlive = false;
+
+            // The enemy's colors change to grayscale when killed
+            aliveParts.gameObject.SetActive(false);
+            deadParts.gameObject.SetActive(true);
         }
     }
 }
