@@ -21,6 +21,10 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI healthPrecentageText;
     public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI titleText;
+    public TextMeshProUGUI startingText;
+    public TextMeshProUGUI restartingText;
+    public bool gameActive = false;
     
     // Start is called before the first frame update
     void Start()
@@ -31,37 +35,33 @@ public class GameManager : MonoBehaviour
         UpdateScore(0);
         healthPercentage = 100;
         UpdateHealthPercentage(0);
-
-        // Spawns the building grid
-        for (int x = -gridSize; x < gridSize; x++)
-        {
-            for (int z = -gridSize; z < gridSize; z++)
-            {
-                int spawn = Random.Range(1, 4);
-                if (spawn == 1)
-                {
-                    // This condition prevents a building spawning on the player at the beguining
-                    if (x != 0 && z != 0)
-                    {
-                        Vector3 spawnPos = new Vector3(x * 20, 15, z * 20);
-                        Instantiate(buildingPrefab, spawnPos, enemyPrefab.transform.rotation);
-                    }
-                }
-            }
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Gets the players position
-        playerX = player.transform.position.x;
-        playerZ = player.transform.position.z;
-        // Gets the enemy count and if the enemy count is less that the total required a new enemy is spawned 
-        enemyCount = FindObjectsOfType<Enemy>().Length;
-        if (enemyCount < enemyTotal)
+        if (gameActive)
         {
-            Instantiate(enemyPrefab, GenerateSpawnPostion(), enemyPrefab.transform.rotation);
+            // Gets the players position
+            playerX = player.transform.position.x;
+            playerZ = player.transform.position.z;
+            // Gets the enemy count and if the enemy count is less that the total required a new enemy is spawned 
+            enemyCount = FindObjectsOfType<Enemy>().Length;
+            if (enemyCount < enemyTotal)
+            {
+                Instantiate(enemyPrefab, GenerateSpawnPostion(), enemyPrefab.transform.rotation);
+            }
+        }else
+        {
+            if(Input.GetKeyDown("space"))
+            {
+                gameActive = true;
+                titleText.gameObject.SetActive(false);
+                gameOverText.gameObject.SetActive(false);
+                startingText.gameObject.SetActive(false);
+                restartingText.gameObject.SetActive(false);
+                GenerateBuildings();
+            }
         }
     }
     
@@ -94,6 +94,27 @@ public class GameManager : MonoBehaviour
         return randomPos;
     }
 
+    public void GenerateBuildings()
+    {
+        // Spawns the building grid
+        for (int x = -gridSize; x < gridSize; x++)
+        {
+            for (int z = -gridSize; z < gridSize; z++)
+            {
+                int spawn = Random.Range(1, 4);
+                if (spawn == 1)
+                {
+                    // This condition prevents a building spawning on the player at the beguining
+                    if (!(x == 0 && z == 0))
+                    {
+                        Vector3 spawnPos = new Vector3(x * 20, 15, z * 20);
+                        Instantiate(buildingPrefab, spawnPos, enemyPrefab.transform.rotation);
+                    }
+                }
+            }
+        }
+    }
+
     // This updates the total enemy count
     public void UpdateEnemies(int enemiesToAdd)
     {
@@ -104,7 +125,10 @@ public class GameManager : MonoBehaviour
     // This triggers when the game is over
     public void GameOver()
     {
+        gameActive = false;
+        titleText.gameObject.SetActive(true);
         gameOverText.gameObject.SetActive(true);
+        restartingText.gameObject.SetActive(true);
     }
 
     // This updates the score

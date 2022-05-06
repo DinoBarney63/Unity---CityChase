@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     public float turnSpeed = 90.0f;
     public float horizontalInput;
     public float forwardInput;
-    public bool gameActive = true;
+    public bool gameActive = false;
     private Rigidbody playerRb;
     private GameObject focalPoint;
     public float playerXRotation;
@@ -36,19 +36,27 @@ public class Player : MonoBehaviour
 
         // If the player's rotation is so the car is up-side down then the game is over
         if (playerXRotation > 80 && playerXRotation < 280)
+        {
             gameActive = false;
-        else if (playerZRotation > 80 && playerZRotation < 280)
+            gameManager.GameOver();
+        }else if (playerZRotation > 80 && playerZRotation < 280)
+        {
             gameActive = false;
-           
+            gameManager.GameOver();
+        }
+
         // When the game is active the player is moved and rotated baced on the player's input otherwise the game is over
         if (gameActive)
         {
             playerRb.AddForce(playerRb.transform.forward * speed * forwardInput);
             transform.Rotate(Vector3.up, turnSpeed * horizontalInput * Time.deltaTime);
-        }
-        else
+        }else
         {
-            gameManager.GameOver();
+            if (Input.GetKeyDown("space"))
+            {
+                transform.position = new Vector3(0, 0, 0);
+                gameActive = true;
+            }
         }
     }
 
