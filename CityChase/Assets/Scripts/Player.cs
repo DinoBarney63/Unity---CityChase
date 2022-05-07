@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float speed = 5.0f;
+    public float speed = 25.0f;
     public float turnSpeed = 90.0f;
-    public float horizontalInput;
-    public float forwardInput;
-    public bool gameActive = false;
+    private float horizontalInput;
+    private float forwardInput;
+    private bool gameActive = false;
     private Rigidbody playerRb;
     private GameObject focalPoint;
-    public float playerXRotation;
-    public float playerZRotation;
+    private float playerXRotation;
+    private float playerZRotation;
     private GameManager gameManager;
     
     // Start is called before the first frame update
@@ -54,7 +54,6 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKeyDown("space"))
             {
-                transform.position = new Vector3(0, 0, 0);
                 gameActive = true;
             }
         }

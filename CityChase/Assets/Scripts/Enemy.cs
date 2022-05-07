@@ -7,8 +7,8 @@ public class Enemy : MonoBehaviour
     public float speed = 20.0f;
     private Rigidbody enemyRb;
     private GameObject player;
-    public bool isAlive = true;
-    public int enemyHealth = 5;
+    private bool isAlive = true;
+    private int enemyHealth = 5;
     private GameManager gameManager;
     public GameObject aliveParts;
     public GameObject deadParts;

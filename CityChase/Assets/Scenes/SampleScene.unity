@@ -278,15 +278,13 @@ MonoBehaviour:
   enemyTotal: 5
   spawnRadius: 85
   buildingPrefab: {fileID: 509928529544178480, guid: 8573d1fd08b97a14bbef8b7e7508bad5, type: 3}
-  gridSize: 10
-  healthPercentage: 0
+  gridSize: 15
   scoreText: {fileID: 666122266}
   healthPrecentageText: {fileID: 1761485706}
   gameOverText: {fileID: 1355614381}
   titleText: {fileID: 885697383}
   startingText: {fileID: 1622834159}
   restartingText: {fileID: 1599077179}
-  gameActive: 0
 --- !u!1 &198014183
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,13 +510,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37ebc46670e9191489505451aeff3e49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 25
   turnSpeed: 90
-  horizontalInput: 0
-  forwardInput: 0
-  gameActive: 0
-  playerXRotation: 0
-  playerZRotation: 0
 --- !u!65 &639337978
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -639,7 +632,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0.87058824, g: 0.87058824, b: 0.87058824, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -875,8 +868,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4291348680
+  m_fontColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1716,7 +1709,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0.87058824, g: 0.87058824, b: 0.87058824, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1878,8 +1871,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4292796126
+  m_fontColor: {r: 0.87058824, g: 0.87058824, b: 0.87058824, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2005,8 +1998,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4292796126
+  m_fontColor: {r: 0.87058824, g: 0.87058824, b: 0.87058824, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

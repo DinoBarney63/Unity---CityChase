@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,17 +16,18 @@ public class GameManager : MonoBehaviour
     private float spawnPosX;
     private float spawnPosZ;
     public GameObject buildingPrefab;
-    public int gridSize = 5;
+    public int gridSize = 10;
     private int score;
-    public float healthPercentage;
+    private float healthPercentage;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI healthPrecentageText;
     public TextMeshProUGUI gameOverText;
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI startingText;
     public TextMeshProUGUI restartingText;
-    public bool gameActive = false;
-    
+    private bool gameActive = false;
+    private bool gameOver = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +37,30 @@ public class GameManager : MonoBehaviour
         UpdateScore(0);
         healthPercentage = 100;
         UpdateHealthPercentage(0);
+
+        // Spawns the building grid
+        for (int x = -gridSize; x <= gridSize; x++)
+        {
+            for (int z = -gridSize; z <= gridSize; z++)
+            {
+                if (!(x == 0 && z == 0))
+                {
+                    if ((Mathf.Abs(x) == gridSize) || (Mathf.Abs(z) == gridSize))
+                    {
+                        Vector3 spawnPos = new Vector3(x * 20, 15, z * 20);
+                        Instantiate(buildingPrefab, spawnPos, enemyPrefab.transform.rotation);
+                    }else
+                    {
+                        int spawn = Random.Range(1, 4);
+                        if (spawn == 1)
+                        {
+                            Vector3 spawnPos = new Vector3(x * 20, 15, z * 20);
+                            Instantiate(buildingPrefab, spawnPos, enemyPrefab.transform.rotation);
+                        }
+                    }
+                }      
+            }
+        }
     }
 
     // Update is called once per frame
@@ -55,12 +81,17 @@ public class GameManager : MonoBehaviour
         {
             if(Input.GetKeyDown("space"))
             {
-                gameActive = true;
-                titleText.gameObject.SetActive(false);
-                gameOverText.gameObject.SetActive(false);
-                startingText.gameObject.SetActive(false);
-                restartingText.gameObject.SetActive(false);
-                GenerateBuildings();
+                if(!gameOver)
+                {
+                    gameActive = true;
+                    titleText.gameObject.SetActive(false);
+                    gameOverText.gameObject.SetActive(false);
+                    startingText.gameObject.SetActive(false);
+                }else
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
+                
             }
         }
     }
@@ -94,27 +125,6 @@ public class GameManager : MonoBehaviour
         return randomPos;
     }
 
-    public void GenerateBuildings()
-    {
-        // Spawns the building grid
-        for (int x = -gridSize; x < gridSize; x++)
-        {
-            for (int z = -gridSize; z < gridSize; z++)
-            {
-                int spawn = Random.Range(1, 4);
-                if (spawn == 1)
-                {
-                    // This condition prevents a building spawning on the player at the beguining
-                    if (!(x == 0 && z == 0))
-                    {
-                        Vector3 spawnPos = new Vector3(x * 20, 15, z * 20);
-                        Instantiate(buildingPrefab, spawnPos, enemyPrefab.transform.rotation);
-                    }
-                }
-            }
-        }
-    }
-
     // This updates the total enemy count
     public void UpdateEnemies(int enemiesToAdd)
     {
@@ -126,6 +136,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         gameActive = false;
+        gameOver = true;
         titleText.gameObject.SetActive(true);
         gameOverText.gameObject.SetActive(true);
         restartingText.gameObject.SetActive(true);
