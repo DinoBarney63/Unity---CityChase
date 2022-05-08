@@ -14,7 +14,12 @@ public class Player : MonoBehaviour
     private float playerXRotation;
     private float playerZRotation;
     private GameManager gameManager;
-    
+    public bool healthRegenCountingDown = true;
+    private float healthRegenCountdownMax = 10;
+    public float healthRegenCountdown = 10;
+    private float healthRegenTimeMax = 5;
+    public float healthRegenTime = 5;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +55,25 @@ public class Player : MonoBehaviour
         {
             playerRb.AddForce(playerRb.transform.forward * speed * forwardInput);
             transform.Rotate(Vector3.up, turnSpeed * horizontalInput * Time.deltaTime);
+            if(healthRegenCountingDown)
+            {
+                if (healthRegenCountdown > 0)
+                    healthRegenCountdown -= Time.deltaTime;
+                else
+                {
+                    healthRegenCountdown = 0;
+                    healthRegenCountingDown = false;
+                }
+            }else
+            {
+                if (healthRegenTime > 0)
+                    healthRegenTime -= Time.deltaTime;
+                else
+                {
+                    healthRegenTime = healthRegenTimeMax;
+                    gameManager.UpdateHealthPercentage(-1);
+                }
+            }
         }else
         {
             if (Input.GetKeyDown("space"))
@@ -64,10 +88,20 @@ public class Player : MonoBehaviour
     {
         // If the player collided with an obstacle then the player loses 0.5% health
         if (collision.gameObject.CompareTag("Obstacle"))
-            gameManager.UpdateHealthPercentage(0.5f);
+        {
+            gameManager.UpdateHealthPercentage(1);
+            healthRegenCountingDown = true;
+            healthRegenCountdown = healthRegenCountdownMax;
+            healthRegenTime = healthRegenTimeMax;
+        }
 
         // If the player collided with an enemy then the player loses 1% health
         else if (collision.gameObject.CompareTag("Enemy"))
+        {
             gameManager.UpdateHealthPercentage(1);
+            healthRegenCountingDown = true;
+            healthRegenCountdown = healthRegenCountdownMax;
+            healthRegenTime = healthRegenTimeMax;
+        }
     }
 }

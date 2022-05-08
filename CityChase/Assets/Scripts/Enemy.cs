@@ -34,8 +34,8 @@ public class Enemy : MonoBehaviour
             enemyRb.AddForce(lookDirection * speed);
         }
 
-        // If the enemy has fallen out of the world then it is destroyed
-        if (transform.position.y < -1)
+        // If the enemy has fallen out of the world or above a building then it is destroyed
+        if ((transform.position.y < -1)|| transform.position.y > 15)
         {
             Destroy(gameObject);
             // If the enemy was killed beforehand then the enemy count gose down by 1
@@ -49,8 +49,11 @@ public class Enemy : MonoBehaviour
     {
         // When the enemy hits a player, obstacle, or enemy then it loses a hit point
         if (collision.gameObject.CompareTag("Player"))
+        {
             enemyHealth -= 1;
-        else if (collision.gameObject.CompareTag("Obstacle"))
+            if (isAlive)
+                gameManager.UpdateScore(1);
+        }else if (collision.gameObject.CompareTag("Obstacle"))
             enemyHealth -= 1;
         else if (collision.gameObject.CompareTag("Enemy"))
             enemyHealth -= 1;

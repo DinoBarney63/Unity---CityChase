@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
             {
                 if (!(x == 0 && z == 0))
                 {
-                    if ((Mathf.Abs(x) == gridSize) || (Mathf.Abs(z) == gridSize))
+                    if ((Mathf.Abs(x) >= gridSize - 3) || (Mathf.Abs(z) >= gridSize - 3))
                     {
                         Vector3 spawnPos = new Vector3(x * 20, 15, z * 20);
                         Instantiate(buildingPrefab, spawnPos, enemyPrefab.transform.rotation);
