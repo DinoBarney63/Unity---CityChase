@@ -15,10 +15,10 @@ public class Player : MonoBehaviour
     private float playerZRotation;
     private GameManager gameManager;
     public bool healthRegenCountingDown = true;
-    private float healthRegenCountdownMax = 10;
-    public float healthRegenCountdown = 10;
-    private float healthRegenTimeMax = 5;
-    public float healthRegenTime = 5;
+    private float healthRegenCountdownMax = 5;
+    public float healthRegenCountdown = 5;
+    private float healthRegenTimeMax = 2;
+    public float healthRegenTime = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -55,27 +55,36 @@ public class Player : MonoBehaviour
         {
             playerRb.AddForce(playerRb.transform.forward * speed * forwardInput);
             transform.Rotate(Vector3.up, turnSpeed * horizontalInput * Time.deltaTime);
+
+            // Health regen timer
+            // If the inital timer is counting down...
             if(healthRegenCountingDown)
             {
+                // If the timer is above 0 then the timer is decreased by time
                 if (healthRegenCountdown > 0)
                     healthRegenCountdown -= Time.deltaTime;
                 else
                 {
+                    // Otherwise the timer is set to 0 and the inital timer is deactivated
                     healthRegenCountdown = 0;
                     healthRegenCountingDown = false;
                 }
             }else
             {
+                // Since the initual timer is deactivated then the second timer can run
+                // If this timer is above 0 then the timer is decreased by time
                 if (healthRegenTime > 0)
                     healthRegenTime -= Time.deltaTime;
                 else
                 {
+                    // Once the timer is up then the timer is reset and the health is increased by 1
                     healthRegenTime = healthRegenTimeMax;
                     gameManager.UpdateHealthPercentage(-1);
                 }
             }
         }else
         {
+            // If space is pressed then the game beguins
             if (Input.GetKeyDown("space"))
             {
                 gameActive = true;
@@ -86,17 +95,8 @@ public class Player : MonoBehaviour
     // OnCollisionEnter is called when the player initionaly collides with another object
     private void OnCollisionEnter(Collision collision)
     {
-        // If the player collided with an obstacle then the player loses 0.5% health
-        if (collision.gameObject.CompareTag("Obstacle"))
-        {
-            gameManager.UpdateHealthPercentage(1);
-            healthRegenCountingDown = true;
-            healthRegenCountdown = healthRegenCountdownMax;
-            healthRegenTime = healthRegenTimeMax;
-        }
-
-        // If the player collided with an enemy then the player loses 1% health
-        else if (collision.gameObject.CompareTag("Enemy"))
+        // If the player collided with an obstacle or an enemy then the player loses 1% health and the health regen timers are reset
+        if ((collision.gameObject.CompareTag("Obstacle"))||(collision.gameObject.CompareTag("Enemy")))
         {
             gameManager.UpdateHealthPercentage(1);
             healthRegenCountingDown = true;

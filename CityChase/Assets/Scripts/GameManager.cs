@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI startingText;
     public TextMeshProUGUI restartingText;
+    public TextMeshProUGUI howToMoveText;
+    public TextMeshProUGUI howToTurnText;
     private bool gameActive = false;
     private bool gameOver = false;
 
@@ -33,27 +35,35 @@ public class GameManager : MonoBehaviour
     {
         player = GameObject.Find("Player");
 
+        // Reseting the score and health
         score = 0;
         UpdateScore(0);
         healthPercentage = 100;
         UpdateHealthPercentage(0);
 
         // Spawns the building grid
+        // For each value of x from -gridsize to gridsize
         for (int x = -gridSize; x <= gridSize; x++)
         {
+            // For each value of z from -gridsize to gridsize
             for (int z = -gridSize; z <= gridSize; z++)
             {
+                // If the values of x and z are both not 0 then...
                 if (!(x == 0 && z == 0))
                 {
+                    // If the absolute value of x or z is bigger than or equal to gridsixe - 3 (for a grid border of 3) then...
                     if ((Mathf.Abs(x) >= gridSize - 3) || (Mathf.Abs(z) >= gridSize - 3))
                     {
+                        // Spawn a building
                         Vector3 spawnPos = new Vector3(x * 20, 15, z * 20);
                         Instantiate(buildingPrefab, spawnPos, enemyPrefab.transform.rotation);
                     }else
                     {
+                        // If the random number between 1 and 4 is equal to 1 then...
                         int spawn = Random.Range(1, 4);
                         if (spawn == 1)
                         {
+                            // Spawn a building
                             Vector3 spawnPos = new Vector3(x * 20, 15, z * 20);
                             Instantiate(buildingPrefab, spawnPos, enemyPrefab.transform.rotation);
                         }
@@ -79,16 +89,22 @@ public class GameManager : MonoBehaviour
             }
         }else
         {
+            // If the game is not active then if the key space is pressed then...
             if(Input.GetKeyDown("space"))
             {
+                // If the game hasn't started yet then the game beguins
                 if(!gameOver)
                 {
                     gameActive = true;
                     titleText.gameObject.SetActive(false);
                     gameOverText.gameObject.SetActive(false);
                     startingText.gameObject.SetActive(false);
-                }else
+                    howToMoveText.gameObject.SetActive(false);
+                    howToTurnText.gameObject.SetActive(false);
+                }
+                else
                 {
+                    // If it has ended then the scene is reset
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
                 
@@ -135,6 +151,7 @@ public class GameManager : MonoBehaviour
     // This triggers when the game is over
     public void GameOver()
     {
+        // The game is turned off and the title is shown
         gameActive = false;
         gameOver = true;
         titleText.gameObject.SetActive(true);
@@ -155,11 +172,14 @@ public class GameManager : MonoBehaviour
     {
         // Adjusts the health and displays it
         healthPercentage -= healthToSubtract;
-        // If the players health is less than or equal to 0 then the game is over
+        // If the players health is less than or equal to 0 then the game is over if it is over 100 then it is set to 100
         if (healthPercentage <= 0)
         {
             healthPercentage = 0;
             GameOver();
+        }else if(healthPercentage > 100)
+        {
+            healthPercentage = 100;
         }
         healthPrecentageText.text = "Health: " + Mathf.Round(healthPercentage) + "%";
     }

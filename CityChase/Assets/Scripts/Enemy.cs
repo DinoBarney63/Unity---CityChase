@@ -60,7 +60,7 @@ public class Enemy : MonoBehaviour
 
         // If the enemy is out of health it calls a function to call in a additional enemy
         // So there is always a equal amount of enemies alive
-        if (enemyHealth < 0 && isAlive)
+        if (enemyHealth <= 0 && isAlive)
         {
             gameManager.UpdateEnemies(1);
             isAlive = false;
