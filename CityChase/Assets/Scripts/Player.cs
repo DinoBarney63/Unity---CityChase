@@ -19,12 +19,14 @@ public class Player : MonoBehaviour
     public float healthRegenCountdown = 5;
     private float healthRegenTimeMax = 2;
     public float healthRegenTime = 2;
+    public float playerHealth = 100;
 
     // Start is called before the first frame update
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        playerHealth = 100;
     }
 
 
@@ -80,6 +82,9 @@ public class Player : MonoBehaviour
                     // Once the timer is up then the timer is reset and the health is increased by 1
                     healthRegenTime = healthRegenTimeMax;
                     gameManager.UpdateHealthPercentage(-1);
+                    playerHealth += 1;
+                    if (playerHealth > 100)
+                        playerHealth = 100;
                 }
             }
         }else
@@ -102,6 +107,9 @@ public class Player : MonoBehaviour
             healthRegenCountingDown = true;
             healthRegenCountdown = healthRegenCountdownMax;
             healthRegenTime = healthRegenTimeMax;
+            playerHealth -= 1;
+            if (playerHealth == 0)
+                gameActive = false;
         }
     }
 }

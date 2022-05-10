@@ -16,7 +16,8 @@ public class GameManager : MonoBehaviour
     private float spawnPosX;
     private float spawnPosZ;
     public GameObject buildingPrefab;
-    public int gridSize = 10;
+    public int gridSize = 13;
+    public int borderSize = 3;
     private int score;
     private float healthPercentage;
     public TextMeshProUGUI scoreText;
@@ -51,8 +52,8 @@ public class GameManager : MonoBehaviour
                 // If the values of x and z are both not 0 then...
                 if (!(x == 0 && z == 0))
                 {
-                    // If the absolute value of x or z is bigger than or equal to gridsixe - 3 (for a grid border of 3) then...
-                    if ((Mathf.Abs(x) >= gridSize - 3) || (Mathf.Abs(z) >= gridSize - 3))
+                    // If the absolute value of x or z is bigger than or equal to gridSize - borderSize (for a grid border of borderSize) then...
+                    if ((Mathf.Abs(x) > gridSize - borderSize) || (Mathf.Abs(z) > gridSize - borderSize))
                     {
                         // Spawn a building
                         Vector3 spawnPos = new Vector3(x * 20, 15, z * 20);

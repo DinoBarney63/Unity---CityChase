@@ -280,7 +280,8 @@ MonoBehaviour:
   enemyTotal: 5
   spawnRadius: 85
   buildingPrefab: {fileID: 509928529544178480, guid: 8573d1fd08b97a14bbef8b7e7508bad5, type: 3}
-  gridSize: 14
+  gridSize: 13
+  borderSize: 3
   scoreText: {fileID: 666122266}
   healthPrecentageText: {fileID: 1761485706}
   gameOverText: {fileID: 1355614381}
@@ -654,6 +655,7 @@ MonoBehaviour:
   healthRegenCountingDown: 1
   healthRegenCountdown: 5
   healthRegenTime: 2
+  playerHealth: 100
 --- !u!65 &639337978
 BoxCollider:
   m_ObjectHideFlags: 0
